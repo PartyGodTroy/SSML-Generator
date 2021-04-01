@@ -15,7 +15,6 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
       
     - name: Setup Nuget
-      uses: actions/checkout@master
       uses: nuget/setup-nuget@v1
      
     - name: Restore NuGet Packages
