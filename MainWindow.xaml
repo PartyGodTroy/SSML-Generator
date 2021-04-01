@@ -1,0 +1,92 @@
+﻿ <mde:MaterialWindow x:Class="SpeechGenerator.MainWindow"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mde="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SpeechGenerator"
+        mc:Ignorable="d"
+        Title="Speech Builder" Height="500" Width="780" MinWidth="500" MinHeight="450" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <WrapPanel Margin="0,0,0,0" HorizontalAlignment="Left" Width="371">
+                <materialDesign:Card>
+                    <StackPanel>
+                        <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}">TTS Input</TextBlock>
+                        <RichTextBox x:Name="SpeechInputBox"  MaxWidth="350" MinWidth="350" MinHeight="340" Width="328">
+                            <FlowDocument>
+                                <Paragraph>
+                                    You can write anything! this will convert it to SSML.
+                                            edit me! and check the output.
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
+                    </StackPanel>
+                </materialDesign:Card>
+            </WrapPanel>
+            <Border Height="10"/>
+            <!-- Controls-->
+            <WrapPanel>
+                <TextBlock Width="100" Style="{DynamicResource MaterialDesignBody2TextBlock}">Select Gender</TextBlock>
+                <Border Width="25"  />
+                <ComboBox Width="200" x:Name="VoiceComboBox"/>
+            </WrapPanel>
+            <WrapPanel HorizontalAlignment="Center" Margin="0,10,0,0">
+                <Button HorizontalAlignment="Right" Click="RunVoice" Style="{DynamicResource MaterialDesignRaisedButton}">
+                    <WrapPanel >
+                        <materialDesign:PackIcon Kind="PlayArrow"/>
+                        <TextBlock>Run</TextBlock>
+                    </WrapPanel>
+                </Button>
+                <Border Width="10"/>
+                <Button  Click="ClearInput" HorizontalAlignment="Right" Style="{DynamicResource MaterialDesignRaisedButton}">
+                    <WrapPanel>
+                        <materialDesign:PackIcon Kind="Clear"/>
+                        <TextBlock>Clear Text</TextBlock>
+                    </WrapPanel>
+                </Button>
+            </WrapPanel>
+        </StackPanel>
+        <StackPanel Grid.Column="2" HorizontalAlignment="Stretch">
+            <materialDesign:Card>
+                <StackPanel>
+                    <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}">SSML Output</TextBlock>
+                    <ScrollViewer>
+                        <TextBox MinWidth="380" MinHeight="340"  x:Name="SSMLOutput"></TextBox>
+                    </ScrollViewer>
+                </StackPanel>
+            </materialDesign:Card>
+            <!-- Buttons Controls-->
+            <WrapPanel HorizontalAlignment="Center" Margin="0,10,0,0">
+                <Button Click="CopyOutputToClipboard" HorizontalAlignment="Right" Style="{DynamicResource MaterialDesignRaisedButton}">
+                    <WrapPanel>
+                        <materialDesign:PackIcon Kind="Clipboard"/>
+                        <TextBlock>Copy to Clipboard</TextBlock>
+                    </WrapPanel>
+                </Button>
+                <Border Width="10"/>
+                <Button HorizontalAlignment="Right" Click="DownloadSSML" Style="{DynamicResource MaterialDesignRaisedButton}">
+                    <WrapPanel >
+                        <materialDesign:PackIcon Kind="Xml"/>
+                        <TextBlock>Download .XML</TextBlock>
+                    </WrapPanel>
+                </Button>
+                <Border Width="10"/>
+            </WrapPanel>
+            <Border Height="20"></Border>
+            <WrapPanel HorizontalAlignment="Center">
+                <TextBlock>           
+                    <Hyperlink NavigateUri="https://github.com/partygodtroy" RequestNavigate="Hyperlink_RequestNavigate">
+                        Checkout my Github
+                    </Hyperlink>
+                </TextBlock>
+            </WrapPanel>
+        </StackPanel>
+    </Grid>
+</mde:MaterialWindow>
