@@ -20,11 +20,11 @@ jobs:
     - name: Restore NuGet Packages
       run: nuget restore SpeechGenerator.sln
  
-    - name: Build and Publish Web App
+    - name: Build and Publish WPF App
       run: msbuild SpeechGenerator.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
  
     - name: Upload Artifact
       uses: actions/upload-artifact@v1.0.0
       with:
         name: published_webapp
-        path: bin\Release\Publish
+        path: bin\Release
