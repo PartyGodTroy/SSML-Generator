@@ -58,7 +58,7 @@
                 <StackPanel>
                     <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}">SSML Output</TextBlock>
                     <ScrollViewer>
-                        <TextBox MinWidth="380" MinHeight="340"  x:Name="SSMLOutput"></TextBox>
+                        <TextBox Width="380" Height="340"  x:Name="SSMLOutput" TextWrapping="Wrap"></TextBox>
                     </ScrollViewer>
                 </StackPanel>
             </materialDesign:Card>
