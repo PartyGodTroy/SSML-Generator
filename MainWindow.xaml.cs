@@ -91,7 +91,7 @@ namespace SpeechGenerator
 
             try
             {
-                Synth.SpeakAsync(speechText);
+                Synth.SpeakSsmlAsync(ssml);
             }
             catch (Exception e)
             {
@@ -158,7 +158,7 @@ namespace SpeechGenerator
                 xmlOutput.Add(new XElement("break"));
                 xmlOutput.Add(paragraphElement);
             }
-            return "<?xml version=\"1.0\" encoding=\"UTF - 8\"?>" + xmlOutput.ToString();
+            return  xmlOutput.ToString();
         }
        
 
