@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Navigation;
+using System.Windows.Documents;
 
 /// <summary>
 /// Generates SSML files from given Text
@@ -26,7 +27,11 @@ namespace SpeechGenerator
         /// Matches english sentence terminators "." "!" "?"
         /// </summary>
         readonly Regex SentenceMatcher = new Regex(@"(\S.+?[.!?])(?=\s+|$)");
-     
+
+        readonly string[] ParagraphSplit = new string[]
+            {
+                Environment.NewLine
+            };
         /// <summary>
         /// Placeholder output
         /// </summary>
@@ -84,7 +89,7 @@ namespace SpeechGenerator
             Synth.SelectVoice(Voices[VoiceComboBox.SelectedIndex].VoiceInfo.Name);
 
             string speechText = Util.StringFromRichTextBox(SpeechInputBox);
-
+            
             string ssml = this.TextToSSML(speechText);
 
             SSMLOutput.Text = ssml;
@@ -113,17 +118,17 @@ namespace SpeechGenerator
             // Adds "xml:lang" to doc
             xmlOutput.SetAttributeValue(XNamespace.Xml + "lang", "en-US");
 
-            // paragraphs are seperated a linebreak \n or \r\n
-            var paragraphs = textInput.Split(Environment.NewLine.ToCharArray());
+            
 
+            // paragraphs are seperated a linebreak \n or \r\n
+            // Ensure atleast newline is present
+            var paragraphs = (textInput + Environment.NewLine).Split(ParagraphSplit,int.MaxValue, StringSplitOptions.RemoveEmptyEntries);
             foreach (var p in paragraphs)
             {
-                if (p.Length == 0) continue ;
 
                 var paragraphElement = new XElement("p");
 
                 var sentences = SentenceMatcher.Matches(p);
-
                 foreach (var s in sentences)
                 {
                     var sentenceText = s.ToString();
@@ -179,10 +184,12 @@ namespace SpeechGenerator
         /// <param name="e"></param>
         void ClearInput(object sender, RoutedEventArgs e)
         {
-            SpeechInputBox.Document.Blocks.Clear();
+            var paragraph = SpeechInputBox.Document.Blocks.FirstBlock as Paragraph;
+            SpeechInputBox.Document.Blocks.Remove(paragraph);
+            SpeechInputBox.Document.Blocks.Add(new Paragraph());
         }
 
-    
+
 
         /// <summary>
         /// Copies the SSML output to the clipboard
